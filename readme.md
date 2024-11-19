@@ -51,3 +51,80 @@ networks:
           gateway: 173.190.0.1
 ```
 
+### Creo as carpetas de configuración e zonas do DNS
+
+mkdir zonas confi
+
+* En conf creo o arquivo named.conf: *
+
+```
+zone "aprendendoensri.int" {
+	type master;
+	file "/var/lib/bind/db.aprendendoensri.int";
+	allow-query {
+		any;
+		};
+	};
+
+zone "zonasx.int" {
+	type master;
+	file "/var/lib/bind/db.zonasx.int";
+	allow-query {
+		any;
+		};
+	};
+	
+	
+	
+options {
+	directory "/var/cache/bind";
+
+	forwarders {
+	 	8.8.8.8;
+		1.1.1.1;
+	 } ;
+	 forward only;
+
+	listen-on { any; };
+	listen-on-v6 { any; };
+
+	allow-query {
+		any;
+	};
+};
+
+```
+
+* En zonas cero os arquivos de configuración de cada zona: *
+
+zona aprendendoensri.int:
+```
+$TTL 38400	; 10 hours 40 minutes
+@		IN SOA	ns.aprendendoensri.int. some.email.address. (
+				17161018   ; serial
+				10800      ; refresh (3 hours)
+				3600       ; retry (1 hour)
+				604800     ; expire (1 week)
+				38400      ; minimum (10 hours 40 minutes)
+				)
+@		IN NS	ns
+ns		IN A		173.190.0.1
+www		IN A		173.190.0.50
+```
+
+Zona zonasx.int:
+```
+$TTL 38400	; 10 hours 40 minutes
+@		IN SOA	ns.zonasx.int. some.email.address. (
+				17161019   ; serial
+				10800      ; refresh (3 hours)
+				3600       ; retry (1 hour)
+				604800     ; expire (1 week)
+				38400      ; minimum (10 hours 40 minutes)
+				)
+@		IN NS	ns
+ns		IN A		173.190.0.2
+www		IN A		173.190.0.50
+```
+
+
