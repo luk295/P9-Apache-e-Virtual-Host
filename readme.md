@@ -155,7 +155,8 @@ ServerName 3.190.0.1
 
 Para elo, entro dende o host no arquivo /etc/systemd/resolved.conf e en **RESOLVE** agrego a dirección DNS, que será a dirección do DNS do docker,  3.190.0.1 
 
-(captura configurada reslve-dns.png).
+![imagen resolve dns](https://github.com/luk295/P9-Apache-e-Virtual-Host/blob/main/resolve-dns.png)
+
 
 
 
