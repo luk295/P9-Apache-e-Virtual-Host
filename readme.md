@@ -125,7 +125,7 @@ $TTL 38400	; 10 hours 40 minutes
 				604800     ; expire (1 week)
 				38400      ; minimum (10 hours 40 minutes)
 				)
-@		IN NS	ns
+@		IN NS	ns	ns.zonasx.int.
 ns		IN A		3.190.0.2
 www		IN A		3.190.0.50
 ```
@@ -153,7 +153,10 @@ ServerName 3.190.0.1
 ```
 ### Agora probo a ver si o meu servidor funciona usando só o servicio DNS da miña máquina virtual:
 
-Para elo, entro dende o host no arquivo /etc/resolv.conf e cambio o 'nameServer' pola dirección 
+Para elo, entro dende o host no arquivo /etc/systemd/resolved.conf e en **RESOLVE** agrego a dirección DNS, que será a dirección do DNS do docker,  3.190.0.1 
 
-(captura)
+(captura configurada reslve-dns.png).
+
+
+
 

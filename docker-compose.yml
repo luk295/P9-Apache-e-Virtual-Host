@@ -29,14 +29,13 @@ services:
     platform: linux/amd64
     ports:
       - 58:53/tcp
-      - 58:53/udp #mapeo do porto 57 do host ao 53 da maquina
+      - 58:53/udp #mapeo do porto 57 do host ao 53 da maquina     
     networks:
       practica_9:
         ipv4_address: 3.190.0.1 # ip fixa
     volumes:
       - ./conf:/etc/bind
       - ./zonas:/var/lib/bind
-      
 # red propia
 networks:
   practica_9: # nome da rede
