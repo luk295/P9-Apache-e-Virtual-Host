@@ -2,14 +2,14 @@
 services:
   web:
     container_name: apache_P9 # nombre 
-    image: httpd:latest # imaxe
+    image: php:7.4-apache # imaxe
     ports:
     - '8080:80' # le cambio el puerto local por uno libre como el 8080
     - '8000:8000' #porto web
     # mapeamos el directorio raiz
     volumes:
-      - ./paginas:/usr/local/apache2/htdocs
-      - ./confApache:/usr/local/apache2/conf
+    - ./www:/var/www/
+    - ./confApache/sites-available:/etc/apache2/sites-available
     
     dns:
       - 3.190.0.1 # dirección do servidor DNS (o bind9) 
