@@ -8,14 +8,17 @@
 services:
   web:
     container_name: apache_P9 # nombre 
-    image: httpd:latest # imaxe
+    image: php:7.4-apache # imaxe
     ports:
     - '8080:80' # le cambio el puerto local por uno libre como el 8080
     - '8000:8000' #porto web
-    # mapeamos el directorio raiz
+    # mapeamos os directorios:
     volumes:
-      - ./paginas:/usr/local/apache2/htdocs
-      - ./confApache:/usr/local/apache2/conf
+    - ./www:/var/www/
+    - ./confApache/sites-available:/etc/apache2/sites-available
+    - ./confApache/sites-enabled:/etc/apache2/sites-enabled
+  
+
     
     dns:
       - 3.190.0.1 # dirección do servidor DNS (o bind9) 
@@ -35,14 +38,13 @@ services:
     platform: linux/amd64
     ports:
       - 58:53/tcp
-      - 58:53/udp #mapeo do porto 57 do host ao 53 da maquina
+      - 58:53/udp #mapeo do porto 57 do host ao 53 da maquina     
     networks:
       practica_9:
         ipv4_address: 3.190.0.1 # ip fixa
     volumes:
       - ./conf:/etc/bind
       - ./zonas:/var/lib/bind
-      
 # red propia
 networks:
   practica_9: # nome da rede
@@ -52,6 +54,7 @@ networks:
         - subnet: 3.190.0.0/16
           ip_range: 3.190.0.0/24
           gateway: 3.190.0.254
+
 ```
 
 ### Creo as carpetas de configuración e zonas do DNS
@@ -110,9 +113,10 @@ $TTL 38400	; 10 hours 40 minutes
 				604800     ; expire (1 week)
 				38400      ; minimum (10 hours 40 minutes)
 				)
-@		IN NS	ns
+@		IN NS	ns	ns.aprendendoensri.int.
 ns		IN A		3.190.0.1
-www		IN A		3.190.0.50
+celta		IN A		3.190.0.22
+40k		IN A		3.190.0.22
 ```
 
 Zona zonasx.int:
@@ -125,9 +129,10 @@ $TTL 38400	; 10 hours 40 minutes
 				604800     ; expire (1 week)
 				38400      ; minimum (10 hours 40 minutes)
 				)
-@		IN NS	ns	ns.zonasx.int.
-ns		IN A		3.190.0.2
-www		IN A		3.190.0.50
+@		IN NS		ns.zonasx.int.
+ns		IN A		3.190.0.1
+celta		IN A		3.190.0.22
+40k		IN A		3.190.0.22
 ```
 
 ### Creo a carpeta configuración de apache e os arquivos:
@@ -156,6 +161,7 @@ ServerName 3.190.0.1
 Para elo, entro dende o host no arquivo /etc/systemd/resolved.conf e en **RESOLVE** agrego a dirección DNS, que será a dirección do DNS do docker,  3.190.0.1 
 
 ![imagen resolve dns](https://github.com/luk295/P9-Apache-e-Virtual-Host/blob/main/resolve-dns.png)
+
 
 
 
