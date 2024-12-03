@@ -10,6 +10,9 @@ services:
     volumes:
     - ./www:/var/www/
     - ./confApache/sites-available:/etc/apache2/sites-available
+    - ./confApache/sites-enabled:/etc/apache2/sites-enabled
+  
+
     
     dns:
       - 3.190.0.1 # dirección do servidor DNS (o bind9) 

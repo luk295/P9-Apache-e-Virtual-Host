@@ -6,7 +6,7 @@ $TTL 38400	; 10 hours 40 minutes
 				604800     ; expire (1 week)
 				38400      ; minimum (10 hours 40 minutes)
 				)
-@		IN NS	ns	ns.zonasx.int
+@		IN NS		ns.zonasx.int.
 ns		IN A		3.190.0.1
-celta		IN A		3.190.0.2
-40k		IN A		3.190.0.2
+celta		IN A		3.190.0.22
+40k		IN A		3.190.0.22
