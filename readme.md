@@ -211,6 +211,6 @@ Agora levanto o Docker Compose e carga coas configuración do Apache. E do dns p
 
 ### Probando que funciona as dúas páxinas:
 
-![imagen resolve dns]()
+![imagen resolve dns](https://github.com/luk295/P9-Apache-e-Virtual-Host/blob/main/funciona.png)
 
 
