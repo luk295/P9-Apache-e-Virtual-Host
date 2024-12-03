@@ -59,9 +59,9 @@ networks:
 
 ### Creo as carpetas de configuración e zonas do DNS
 
-mkdir zonas confi
+mkdir zonas conf
 
-* En conf creo o arquivo named.conf: *
+**En conf creo o arquivo named.conf:** 
 
 ```
 zone "aprendendoensri.int" {
@@ -101,7 +101,7 @@ options {
 
 ```
 
-** En zonas cero os arquivos de configuración de cada zona: **
+**En zonas creo os arquivos de configuración de cada zona:**
 
 zona aprendendoensri.int:
 ```
@@ -113,7 +113,7 @@ $TTL 38400	; 10 hours 40 minutes
 				604800     ; expire (1 week)
 				38400      ; minimum (10 hours 40 minutes)
 				)
-@		IN NS	ns	ns.aprendendoensri.int.
+@		IN NS		ns.aprendendoensri.int.
 ns		IN A		3.190.0.1
 celta		IN A		3.190.0.22
 40k		IN A		3.190.0.22
@@ -138,7 +138,7 @@ celta		IN A		3.190.0.22
 ### Creo a carpeta configuración de apache e os arquivos:
 mkdir confApache
 
-arquivos: **httpd.conf e mime.types**
+arquivos: **httpd.conf e mime.types** (este último é porque dábame un erro. Pode ser porque estaba usando a imaxe httpd.)
 
 No httpd.conf configuro algunhas liñas como:
 ```
@@ -162,8 +162,55 @@ Para elo, entro dende o host no arquivo /etc/systemd/resolved.conf e en **RESOLV
 
 ![imagen resolve dns](https://github.com/luk295/P9-Apache-e-Virtual-Host/blob/main/resolve-dns.png)
 
+Agora reinicio o servicio con sudo service systemd-resolved restart
+### Creando os volumes:
 
+**No meu directorio de traballo, creo as carpetas www e confApache**
 
+-En www, crearei as carpetas 'celta' e '40k'. Onde irán os seus respectivos index.html
 
+-En confApache, creo as carpetas 'sites-available' e 'sites-enabled'. As dúas carpetas ten o mesmo contenido: os arquivos 'celta.conf' e '40k.conf'.
+
+Nestos arquivos, irán os VirtualHost:
+
+celta.conf:
+```
+<VirtualHost *:80>
+    ServerAdmin webmaster@localhost
+    ServerName celta.zonasx.int
+    ServerAlias www.celta.zonasx.int
+    DocumentRoot /var/www/celta
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+
+```
+40k.cnf:
+```                                             
+<VirtualHost *:80>
+    ServerAdmin webmaster@localhost
+    ServerName 40k.zonasx.int
+    ServerAlias www.40k.zonasx.int
+    DocumentRoot /var/www/40k
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+
+```
+
+Agora que xa teño as carpetas de configuración do Apache creadas na miña máquina, queda mapealas para que se "carguen" na máquina virtual. Para iso no docker úsase os volumes:
+
+```
+    volumes:
+    - ./www:/var/www/
+    - ./confApache/sites-available:/etc/apache2/sites-available
+    - ./confApache/sites-enabled:/etc/apache2/sites-enabled
+  
+```
+Agora levanto o Docker Compose e carga coas configuración do Apache. E do dns para que poida resolver os nomes:
+
+### Probando que funciona as dúas páxinas:
+
+![imagen resolve dns]()
 
 
